@@ -305,6 +305,13 @@ public class TestRPC {
     }
 
     @Override
+    public <T> ProtocolProxy<T> getProxy(Class<T> protocol, long clientVersion,
+        ConnectionId connId, Configuration conf, SocketFactory factory)
+            throws IOException {
+      throw new UnsupportedOperationException("This proxy is not supported");
+    }
+
+    @Override
     public org.apache.hadoop.ipc.RPC.Server getServer(Class<?> protocol,
         Object instance, String bindAddress, int port, int numHandlers,
         int numReaders, int queueSizePerHandler, boolean verbose, Configuration conf,

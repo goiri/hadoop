@@ -105,6 +105,18 @@ public class ProtobufRpcEngine implements RpcEngine {
     return new ProtocolProxy<T>(protocol, (T) Proxy.newProxyInstance(
         protocol.getClassLoader(), new Class[]{protocol}, invoker), false);
   }
+
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> ProtocolProxy<T> getProxy(Class<T> protocol, long clientVersion,
+      Client.ConnectionId connId, Configuration conf, SocketFactory factory)
+          throws IOException {
+    final Invoker invoker = new Invoker(protocol, connId, conf, factory);
+    return new ProtocolProxy<T>(protocol,
+        (T) Proxy.newProxyInstance(protocol.getClassLoader(),
+            new Class[] { protocol }, invoker),
+        false);
+  }
   
   @Override
   public ProtocolProxy<ProtocolMetaInfoPB> getProtocolMetaInfoProxy(

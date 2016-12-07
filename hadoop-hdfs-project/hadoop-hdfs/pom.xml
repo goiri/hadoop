@@ -207,6 +207,15 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-framework</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -472,6 +481,8 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                   <include>hdfs.proto</include>
                   <include>encryption.proto</include>
                   <include>inotify.proto</include>
+                  <include>FederationProtocol.proto</include>
+                  <include>RouterProtocol.proto</include>
                 </includes>
               </source>
               <output>${project.build.directory}/generated-sources/java</output>

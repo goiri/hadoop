@@ -1,0 +1,225 @@
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+option java_package = "org.apache.hadoop.hdfs.federation.protocol.proto";
+option java_outer_classname = "HdfsServerFederationProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package hadoop.hdfs;
+
+message NamenodeMembershipRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional uint64 lastContact = 3;
+  optional string routerId = 4;
+  optional string nameserviceId = 5;
+  optional string namenodeId = 6;
+  optional string clusterId = 7;
+  optional string blockPoolId = 8;
+  optional string webAddress = 9;
+  optional string rpcAddress = 10;
+  optional string state = 11;
+  optional bool isSafeMode = 12;
+
+  optional uint64 totalSpace = 13;
+  optional uint64 availableSpace = 14;
+
+  optional uint64 numOfFiles = 15;
+  optional uint64 numOfBlocks = 16;
+  optional uint64 numOfBlocksMissing = 17;
+  optional uint64 numOfBlocksPendingReplication = 18;
+  optional uint64 numOfBlocksUnderReplicated = 19;
+  optional uint64 numOfBlocksPendingDeletion = 20;
+
+  optional uint32 numberOfDecomDatanodes = 21;
+  optional uint32 numberOfActiveDatanodes = 22;
+  optional uint32 numberOfDeadDatanodes = 23;
+}
+
+message FederationNamespaceInfoProto {
+  optional string blockPoolId = 1;
+  optional string clusterId = 2;
+  optional string nameserviceId = 3;
+}
+
+message QueryPairProto {
+  optional string key = 1;
+  optional string value = 2;
+}
+
+message GetNamenodeRegistrationsRequestProto {
+  repeated QueryPairProto query = 1;
+}
+
+message GetNamenodeRegistrationsResponseProto {
+  repeated NamenodeMembershipRecordProto namenodeMemberships = 1;
+}
+
+message GetExpiredRegistrationsRequestProto {
+}
+
+message GetNamespaceInfoRequestProto {
+}
+
+message GetNamespaceInfoResponseProto {
+  repeated FederationNamespaceInfoProto namespaceInfos = 1;
+}
+
+message OverrideNamenodeRegistrationRequestProto {
+  optional string nameserviceId= 1;
+  optional string namenodeId= 2;
+  optional string state= 3;
+}
+
+message OverrideNamenodeRegistrationResponseProto {
+  optional bool status = 1;
+}
+
+message NamenodeHeartbeatRequestProto {
+  optional NamenodeMembershipRecordProto namenodeMembership = 1;
+}
+
+message NamenodeHeartbeatResponseProto {
+  optional bool status = 1;
+}
+
+message MountTableRecordProto {
+  optional string srcPath = 1;
+  optional string destPath = 2;
+  optional uint64 dateCreated = 3;
+  optional uint64 dateModified = 4;
+}
+
+message AddMountTableEntryRequestProto {
+  optional MountTableRecordProto entry = 1;
+}
+
+message AddMountTableEntryResponseProto {
+  optional bool status = 1;
+}
+
+message UpdateMountTableEntryRequestProto {
+  optional MountTableRecordProto entry = 1;
+}
+
+message UpdateMountTableEntryResponseProto {
+  optional bool status = 1;
+}
+
+message RemoveMountTableEntryRequestProto {
+  optional string srcPath = 1;
+}
+
+message RemoveMountTableEntryResponseProto{
+  optional bool status = 1;
+}
+
+message GetMountTableEntriesRequestProto {
+  optional string srcPath = 1;
+}
+
+message GetMountTableEntriesResponseProto {
+  repeated MountTableRecordProto entries = 1;
+  optional uint64 timestamp = 2;
+}
+
+
+message RouterRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string address = 3;
+  optional uint64 pathLockVersion = 4;
+  optional uint64 fileResolverVersion = 5;
+  optional string status = 6;
+  optional string buildVersion = 7;
+  optional string compileInfo = 8;
+  optional uint64 dateStarted = 9;
+}
+
+message GetRouterRegistrationRequestProto {
+  optional string routerId = 1;
+}
+
+message GetRouterRegistrationResponseProto {
+  optional RouterRecordProto router = 1;
+}
+
+message GetRouterRegistrationsRequestProto {
+}
+
+message GetRouterRegistrationsResponseProto {
+  optional uint64 timestamp = 1;
+  repeated RouterRecordProto routers = 2;
+}
+
+message RouterHeartbeatRequestProto {
+  optional string routerId = 1;
+  optional string status = 2;
+  optional uint64 dateStarted = 3;
+}
+
+message RouterHeartbeatResponseProto {
+  optional bool status = 1;
+}
+
+message RebalancerRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string id = 3;
+  optional string state = 4;
+  optional string operationStatus = 5;
+  optional string mount = 6;
+  optional string nameserviceId = 7;
+  optional string dstPath = 8;
+  optional string clientId = 9;
+  optional uint64 dateReserved = 10;
+  optional string operationResult = 11;
+  optional string jobId = 12;
+  optional string trackingUrl = 13;
+  optional float progress = 14;
+  optional uint64 dateStateUpdated = 15;
+}
+
+message PathLockRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string sourcePath = 3;
+  optional string lockClient = 4;
+}
+
+message BarrierRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string recordIdentifier = 3;
+  optional string clientIdentifier = 4;
+}
+
+message DecommissionedNamespaceRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string nameServiceId = 3;
+}
+
+message NamespaceStatsRecordProto {
+  optional uint64 dateCreated = 1;
+  optional uint64 dateModified = 2;
+  optional string routerId = 3;
+  optional uint64 timeWindowStart = 4;
+  optional string stats = 5;
+}
+

@@ -311,6 +311,14 @@ public class WritableRpcEngine implements RpcEngine {
             factory, rpcTimeout, fallbackToSimpleAuth));
     return new ProtocolProxy<T>(protocol, proxy, true);
   }
+
+  @Override
+  public <T> ProtocolProxy<T> getProxy(Class<T> protocol, long clientVersion,
+      Client.ConnectionId connId, Configuration conf, SocketFactory factory)
+          throws IOException {
+    return getProxy(protocol, clientVersion, connId.getAddress(), connId.ticket,
+        conf, factory, connId.getRpcTimeout(), connId.getRetryPolicy(), null);
+  }
   
   /* Construct a server for a protocol implementation instance listening on a
    * port and address. */

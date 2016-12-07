@@ -52,6 +52,11 @@ public interface RpcEngine {
                   RetryPolicy connectionRetryPolicy,
                   AtomicBoolean fallbackToSimpleAuth) throws IOException;
 
+  /** Construct a client-side proxy object using a ConnectionId. */
+  <T> ProtocolProxy<T> getProxy(Class<T> protocol, long clientVersion,
+      Client.ConnectionId connId, Configuration conf, SocketFactory factory)
+          throws IOException;
+
   /** 
    * Construct a server for a protocol implementation instance.
    * 

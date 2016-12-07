@@ -59,6 +59,7 @@ import org.apache.hadoop.fs.permission.AclStatus;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.hdfs.StorageType;
 import org.apache.hadoop.hdfs.XAttrHelper;
+import org.apache.hadoop.hdfs.protocol.ClientProtocol;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.hdfs.protocol.DirectoryListing;
 import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
@@ -919,7 +920,7 @@ public class NamenodeWebHdfsMethods {
     }
   }
 
-  private static DirectoryListing getDirectoryListing(final NamenodeProtocols np,
+  private static DirectoryListing getDirectoryListing(final ClientProtocol np,
       final String p, byte[] startAfter) throws IOException {
     final DirectoryListing listing = np.getListing(p, startAfter, false);
     if (listing == null) { // the directory does not exist
@@ -928,7 +929,7 @@ public class NamenodeWebHdfsMethods {
     return listing;
   }
   
-  private static StreamingOutput getListingStream(final NamenodeProtocols np, 
+  protected static StreamingOutput getListingStream(final ClientProtocol np,
       final String p) throws IOException {
     // allows exceptions like FNF or ACE to prevent http response of 200 for
     // a failure since we can't (currently) return error responses in the

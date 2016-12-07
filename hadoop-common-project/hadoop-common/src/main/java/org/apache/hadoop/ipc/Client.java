@@ -1533,7 +1533,7 @@ public class Client {
     InetSocketAddress address;
     UserGroupInformation ticket;
     final Class<?> protocol;
-    private static final int PRIME = 16777619;
+    protected static final int PRIME = 16777619;
     private final int rpcTimeout;
     private final int maxIdleTime; //connections will be culled if it was idle for 
     //maxIdleTime msecs
@@ -1547,7 +1547,7 @@ public class Client {
     private String saslQop; // here for testing
     private final Configuration conf; // used to get the expected kerberos principal name
     
-    ConnectionId(InetSocketAddress address, Class<?> protocol, 
+    protected ConnectionId(InetSocketAddress address, Class<?> protocol,
                  UserGroupInformation ticket, int rpcTimeout,
                  RetryPolicy connectionRetryPolicy, Configuration conf) {
       this.protocol = protocol;
@@ -1587,7 +1587,7 @@ public class Client {
       return ticket;
     }
     
-    private int getRpcTimeout() {
+    public int getRpcTimeout() {
       return rpcTimeout;
     }
     
@@ -1615,7 +1615,11 @@ public class Client {
     int getPingInterval() {
       return pingInterval;
     }
-    
+
+    public RetryPolicy getRetryPolicy() {
+      return connectionRetryPolicy;
+    }
+
     @VisibleForTesting
     String getSaslQop() {
       return saslQop;
